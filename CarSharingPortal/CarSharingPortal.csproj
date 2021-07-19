@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-CarSharingPortal-FA6F0CDE-0E9C-49FF-8562-516F1DA06E80</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20210719092432_Init.cs" />
+    <Compile Remove="Data\Migrations\20210719092432_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210719093010_Init.cs" />
+    <Compile Remove="Data\Migrations\20210719093010_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210719093449_Init.cs" />
+    <Compile Remove="Data\Migrations\20210719093449_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210719101306_Init.cs" />
+    <Compile Remove="Data\Migrations\20210719101306_Init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Implementations\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
