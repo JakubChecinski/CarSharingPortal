@@ -12,6 +12,8 @@ namespace CarSharingPortal.Implementations
     {
         private readonly IApplicationDbContext _context;
         public ICarSharingOfferRepository Offers { get; }
+        public ICityRepository Cities { get; }
+
         public UnitOfWork(IApplicationDbContext context)
         {
             _context = context;
