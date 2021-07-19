@@ -1,4 +1,6 @@
 ﻿using CarSharingPortal.Models;
+using CarSharingPortal.Models.ViewModels;
+using CarSharingPortal.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +14,26 @@ namespace CarSharingPortal.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private ICarSharingOfferService _offerService;
+        private ICityService _cityService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+            ICarSharingOfferService offerService, ICityService cityService)
         {
             _logger = logger;
+            _cityService = cityService;
+            _offerService = offerService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var vm = new IndexViewModel()
+            {
+                IsPassenger = true,
+                Cities = _cityService.Get(),
+                Offers = _offerService.Get(),
+            };
+            return View(vm);
         }
 
         public IActionResult Privacy()
@@ -33,5 +46,6 @@ namespace CarSharingPortal.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

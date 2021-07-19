@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CarSharingPortal.Services
 {
-    interface ICityService
+    public interface ICityService
     {
         IEnumerable<City> Get();
         void Add(City city);

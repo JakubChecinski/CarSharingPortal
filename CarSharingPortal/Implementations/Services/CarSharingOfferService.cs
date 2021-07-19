@@ -1,5 +1,6 @@
 ﻿using CarSharingPortal.Models;
 using CarSharingPortal.Models.Domains;
+using CarSharingPortal.Models.ViewModels;
 using CarSharingPortal.Services;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,11 @@ namespace CarSharingPortal.Implementations.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<CarSharingOffer> Get()
+        public IEnumerable<CarSharingOfferViewModel> Get()
         {
             return _unitOfWork.Offers.Get();
         }
-        public IEnumerable<CarSharingOffer> Get(string city1, string city2, bool isPassenger)
+        public IEnumerable<CarSharingOfferViewModel> Get(string city1, string city2, bool isPassenger)
         {
             return _unitOfWork.Offers.Get(city1, city2, isPassenger);
         }

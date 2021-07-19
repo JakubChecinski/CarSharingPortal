@@ -5,9 +5,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to car sharing portal!</h1>
+    <h1 class="display-4">Welcome to Car Sharing Portal!</h1>
 </div>
 
+
 <div>
-    Tu jest miejsce na t
+    @await Html.PartialAsync("_OffersTable.cshtml", Model.Offers)
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+    </script>
+}

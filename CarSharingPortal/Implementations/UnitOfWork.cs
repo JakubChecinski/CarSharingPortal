@@ -18,6 +18,7 @@ namespace CarSharingPortal.Implementations
         {
             _context = context;
             Offers = new CarSharingOfferRepository(context);
+            Cities = new CityRepository(context);
         }
         public void Save()
         {

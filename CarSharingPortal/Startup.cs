@@ -1,4 +1,8 @@
+using CarSharingPortal.Implementations;
 using CarSharingPortal.Implementations.Data;
+using CarSharingPortal.Implementations.Services;
+using CarSharingPortal.Models;
+using CarSharingPortal.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +31,11 @@ namespace CarSharingPortal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICarSharingOfferService, CarSharingOfferService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

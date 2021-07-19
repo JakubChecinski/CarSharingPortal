@@ -1,6 +1,7 @@
 ﻿using CarSharingPortal.Models;
 using CarSharingPortal.Models.Domains;
 using CarSharingPortal.Models.Repositories;
+using CarSharingPortal.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,19 +18,42 @@ namespace CarSharingPortal.Implementations.Repositories
             _context = context;
         }
 
-        public IEnumerable<CarSharingOffer> Get()
+        public IEnumerable<CarSharingOfferViewModel> Get()
         {
-            return _context.CarSharingOffers
-                .Include(x => x.Author.UserName)
-                .Include(x => x.Author.Email);
+            var resultAsList = _context.CarSharingOffers
+                .Include(x => x.Author).ToList();           // make LINQ agree with Entity
+            return resultAsList
+                .Select(x => new CarSharingOfferViewModel
+                {
+                    From = x.TravelRoute.StartOrEndPoints.Count > 0 ? null 
+                        : x.TravelRoute.StartOrEndPoints.ElementAt(0).City.Name,
+                    To = x.TravelRoute.StartOrEndPoints.Count > 0 ? null
+                        : x.TravelRoute.StartOrEndPoints.ElementAt(1).City.Name,
+                    DateTravelStart = x.DateTravelStart,
+                    IsAuthorPassenger = x.IsAuthorPassenger,
+                    AuthorName = x.Author.UserName,
+                    AuthorEmail = x.Author.Email,
+                });
         }
-        public IEnumerable<CarSharingOffer> Get(string city1, string city2, bool isPassenger)
+        public IEnumerable<CarSharingOfferViewModel> Get(string city1, string city2, bool isPassenger)
         {
-            return _context.CarSharingOffers
+            var resultAsList = _context.CarSharingOffers
                 .Include(x => x.Author.UserName)
                 .Include(x => x.Author.Email)
                 .Where(x => x.IsAuthorPassenger == isPassenger)
-                .Where(x => IsRouteAcceptable(x.TravelRoute, city1, city2));
+                .Where(x => IsRouteAcceptable(x.TravelRoute, city1, city2)).ToList();
+            return resultAsList
+                .Select(x => new CarSharingOfferViewModel
+                {
+                    From = x.TravelRoute.StartOrEndPoints.Count > 0 ? null 
+                        : x.TravelRoute.StartOrEndPoints.ElementAt(0).City.Name,
+                    To = x.TravelRoute.StartOrEndPoints.Count > 0 ? null
+                        : x.TravelRoute.StartOrEndPoints.ElementAt(1).City.Name,
+                    DateTravelStart = x.DateTravelStart,
+                    IsAuthorPassenger = x.IsAuthorPassenger,
+                    AuthorName = x.Author.UserName,
+                    AuthorEmail = x.Author.Email,
+                });
         }
         private bool IsRouteAcceptable(TravelRoute tr, string city1, string city2)
         {

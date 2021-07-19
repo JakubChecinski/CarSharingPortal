@@ -8,7 +8,7 @@ namespace CarSharingPortal.Models.ViewModels
 {
     public class IndexViewModel
     {
-        public IEnumerable<CarSharingOffer> Offers { get; set; }
+        public IEnumerable<CarSharingOfferViewModel> Offers { get; set; }
         public IEnumerable<City> Cities { get; set; }
         public bool IsPassenger { get; set; }
     }
