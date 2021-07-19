@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CarSharingPortal.Data.Migrations
+namespace CarSharingPortal.Implementations.Data.Migrations
 {
     public partial class Init : Migration
     {

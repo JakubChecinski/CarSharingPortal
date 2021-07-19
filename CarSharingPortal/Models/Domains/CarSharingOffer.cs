@@ -17,6 +17,9 @@ namespace CarSharingPortal.Models.Domains
         [Required]
         public DateTime DateTravelStart { get; set; }
 
+        [Required]
+        public bool IsAuthorPassenger { get; set; }
+
 
         [Required]
         [ForeignKey("Author")]
