@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace CarSharingPortal.Models.Repositories
 {
-    interface ICarSharingOfferRepository
+    public interface ICarSharingOfferRepository
     {
         IEnumerable<CarSharingOffer> Get();
         IEnumerable<CarSharingOffer> Get(string city1, string city2, bool isPassenger);
+        void Add(CarSharingOffer offer);
+        void Update(CarSharingOffer offer, string userId);
+        void Delete(CarSharingOffer offer, string userId);
 
     }
 }
