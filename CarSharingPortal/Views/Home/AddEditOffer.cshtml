@@ -20,21 +20,21 @@
     <div>I am a... </div>
     <div class="form-check">
         @Html.RadioButtonFor(x => x.Offer.IsAuthorPassenger, false,
-       new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
-           @id="radioDriver", @checked="checked"})
+            new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
+            @id="radioDriver", @checked="checked"})
         <label class="form-check-label" for="radioDriver">
             Driver
         </label>
     </div>
     <div class="form-check">
         @Html.RadioButtonFor(x => x.Offer.IsAuthorPassenger, true,
-       new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
-           @id="radioDriver", @checked="checked"})
+            new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
+            @id="radioDriver", @checked="checked"})
         <label class="form-check-label" for="radioPassenger">
             Passenger
         </label>
     </div>
-
+    <br />
     <div class="form-group">
         @Html.LabelFor(x => x.Offer.DateTravelStart)
         @Html.TextBoxFor(x => x.Offer.DateTravelStart,
@@ -42,7 +42,7 @@
             new { @class = "form-control", @id = "TravelStart", autocomplete = "off" })
         @Html.ValidationMessageFor(x => x.Offer.DateTravelStart)
     </div>
-
+    
     <div class="form-group">
         @Html.LabelFor(x => x.Route.StartId)
         @Html.DropDownListFor(x => x.Route.StartId,

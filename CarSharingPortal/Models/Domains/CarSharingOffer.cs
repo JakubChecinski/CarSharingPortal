@@ -15,6 +15,7 @@ namespace CarSharingPortal.Models.Domains
         public DateTime DateCreated { get; set; }
 
         [Required]
+        [Display(Name="Travelling on...")]
         public DateTime DateTravelStart { get; set; }
 
         [Required]
