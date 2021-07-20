@@ -13,12 +13,14 @@ namespace CarSharingPortal.Implementations
         private readonly IApplicationDbContext _context;
         public ICarSharingOfferRepository Offers { get; }
         public ICityRepository Cities { get; }
+        public ITravelRouteRepository Routes { get; }
 
         public UnitOfWork(IApplicationDbContext context)
         {
             _context = context;
             Offers = new CarSharingOfferRepository(context);
             Cities = new CityRepository(context);
+            Routes = new TravelRouteRepository(context);
         }
         public void Save()
         {

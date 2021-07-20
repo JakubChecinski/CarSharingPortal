@@ -1,0 +1,97 @@
+﻿@model CarSharingPortal.Models.ViewModels.AddEditOfferViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h1 class="mb-3">@Model.Heading</h1>
+
+
+@using (Html.BeginForm("AddEditOffer, Home"))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(x => x.Offer.Id)
+    @Html.HiddenFor(x => x.Offer.DateCreated)
+    @Html.HiddenFor(x => x.Offer.AuthorId)
+
+    <div>I am a... </div>
+    <div class="form-check">
+        @Html.RadioButtonFor(x => x.Offer.IsAuthorPassenger, false,
+       new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
+           @id="radioDriver", @checked="checked"})
+        <label class="form-check-label" for="radioDriver">
+            Driver
+        </label>
+    </div>
+    <div class="form-check">
+        @Html.RadioButtonFor(x => x.Offer.IsAuthorPassenger, true,
+       new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
+           @id="radioDriver", @checked="checked"})
+        <label class="form-check-label" for="radioPassenger">
+            Passenger
+        </label>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Offer.DateTravelStart)
+        @Html.TextBoxFor(x => x.Offer.DateTravelStart,
+            "{0:yyyy-MM-dd}",
+            new { @class = "form-control", @id = "TravelStart", autocomplete = "off" })
+        @Html.ValidationMessageFor(x => x.Offer.DateTravelStart)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Route.StartId)
+        @Html.DropDownListFor(x => x.Route.StartId,
+            new SelectList(Model.Cities, "Id", "Name"),
+            "-- select a city --",
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Route.Start)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Route.EndId)
+        @Html.DropDownListFor(x => x.Route.EndId,
+            new SelectList(Model.Cities, "Id", "Name"),
+            "-- select a city --",
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Route.EndId)
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg mt-2">
+        Save
+    </button>
+
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            // from https://stackoverflow.com/a/35413963 (ensure yyyy-MM-dd format)
+            $.validator.methods.date = function (dateString) {
+                return true;
+                var regEx = /^\d{4}-\d{2}-\d{2}$/;
+                if (!dateString.match(regEx)) return false;  // Invalid format
+                var d = new Date(dateString);
+                var dNum = d.getTime();
+                if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
+                return d.toISOString().slice(0, 10) === dateString;
+            };
+
+            $("#TravelStart").datepicker({
+                format: "yyyy-mm-dd",
+                multidate: false,
+                autoclose: true,
+                todayHighlight: true,
+                forceParse: false
+            });
+
+        });
+
+    </script>
+}

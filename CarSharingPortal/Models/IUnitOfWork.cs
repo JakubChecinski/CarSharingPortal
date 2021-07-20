@@ -6,6 +6,7 @@ namespace CarSharingPortal.Models
     {
         ICarSharingOfferRepository Offers { get; }
         ICityRepository Cities { get; }
+        ITravelRouteRepository Routes { get; }
         void Save();
     }
 }

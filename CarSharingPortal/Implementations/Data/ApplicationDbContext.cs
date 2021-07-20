@@ -32,14 +32,15 @@ namespace CarSharingPortal.Implementations.Data
                 .HasForeignKey(x => x.AuthorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<TravelRoute>()
-                .HasMany(x => x.StartOrEndPoints)
-                .WithOne(x => x.TravelRouteEndPoint)
-                .HasForeignKey(x => x.TravelRouteEndPointId);
-            modelBuilder.Entity<TravelRoute>()
-                .HasMany(x => x.AcceptableConnections)
-                .WithOne(x => x.TravelRouteConnection)
-                .HasForeignKey(x => x.TravelRouteConnectionId)
+            modelBuilder.Entity<City>()
+                .HasMany(x => x.TravelRoutesStartingHere)
+                .WithOne(x => x.Start)
+                .HasForeignKey(x => x.StartId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<City>()
+                .HasMany(x => x.TravelRoutesEndingHere)
+                .WithOne(x => x.End)
+                .HasForeignKey(x => x.EndId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

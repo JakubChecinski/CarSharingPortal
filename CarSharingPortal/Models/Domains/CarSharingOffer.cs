@@ -12,13 +12,15 @@ namespace CarSharingPortal.Models.Domains
         [Key]
         public int Id { get; set; }
 
-        public DateTime DateAdded { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [Required]
         public DateTime DateTravelStart { get; set; }
 
         [Required]
         public bool IsAuthorPassenger { get; set; }
+
+        public string AuthorName { get; set; }
 
 
         [Required]
@@ -27,7 +29,6 @@ namespace CarSharingPortal.Models.Domains
         public ApplicationUser Author { get; set; }
 
 
-        [Required]
         public int TravelRouteId { get; set; }
         public TravelRoute TravelRoute { get; set; }
     }

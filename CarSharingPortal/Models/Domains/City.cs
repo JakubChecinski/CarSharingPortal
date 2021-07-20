@@ -14,10 +14,14 @@ namespace CarSharingPortal.Models.Domains
 
         public string Name { get; set; }
         public ICollection<CitiesTravelRoutes> TravelRoutesIncluded { get; set; }
+        public ICollection<TravelRoute> TravelRoutesStartingHere { get; set; }
+        public ICollection<TravelRoute> TravelRoutesEndingHere { get; set; }
 
         public City()
         {
             TravelRoutesIncluded = new Collection<CitiesTravelRoutes>();
+            TravelRoutesStartingHere = new Collection<TravelRoute>();
+            TravelRoutesEndingHere = new Collection<TravelRoute>();
         }
 
     }

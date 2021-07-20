@@ -33,6 +33,7 @@ namespace CarSharingPortal
         {
             services.AddScoped<ICarSharingOfferService, CarSharingOfferService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ITravelRouteService, TravelRouteService>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

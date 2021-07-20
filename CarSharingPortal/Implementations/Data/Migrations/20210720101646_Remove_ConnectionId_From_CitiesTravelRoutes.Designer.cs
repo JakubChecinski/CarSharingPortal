@@ -4,14 +4,16 @@ using CarSharingPortal.Implementations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarSharingPortal.Implementations.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210720101646_Remove_ConnectionId_From_CitiesTravelRoutes")]
+    partial class Remove_ConnectionId_From_CitiesTravelRoutes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace CarSharingPortal.Implementations.Data.Migrations
                     b.Property<string>("AuthorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AuthorName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -67,11 +66,16 @@ namespace CarSharingPortal.Implementations.Data.Migrations
                     b.Property<int>("TravelRouteId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TravelRouteId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
                     b.HasIndex("TravelRouteId");
+
+                    b.HasIndex("TravelRouteId1");
 
                     b.ToTable("CitiesTravelRoutes");
                 });
@@ -98,17 +102,7 @@ namespace CarSharingPortal.Implementations.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EndId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StartId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("EndId");
-
-                    b.HasIndex("StartId");
 
                     b.ToTable("TravelRoutes");
                 });
@@ -350,25 +344,14 @@ namespace CarSharingPortal.Implementations.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CarSharingPortal.Models.Domains.TravelRoute", "TravelRoute")
-                        .WithMany("AcceptableConnections")
+                        .WithMany("StartOrEndPoints")
                         .HasForeignKey("TravelRouteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("CarSharingPortal.Models.Domains.TravelRoute", b =>
-                {
-                    b.HasOne("CarSharingPortal.Models.Domains.City", "End")
-                        .WithMany("TravelRoutesEndingHere")
-                        .HasForeignKey("EndId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CarSharingPortal.Models.Domains.City", "Start")
-                        .WithMany("TravelRoutesStartingHere")
-                        .HasForeignKey("StartId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("CarSharingPortal.Models.Domains.TravelRoute", null)
+                        .WithMany("AcceptableConnections")
+                        .HasForeignKey("TravelRouteId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

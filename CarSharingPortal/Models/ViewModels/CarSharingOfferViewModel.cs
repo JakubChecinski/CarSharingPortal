@@ -7,12 +7,12 @@ namespace CarSharingPortal.Models.ViewModels
 {
     public class CarSharingOfferViewModel
     {
+        public string Heading { get; set; }
         public string From { get; set; }
         public string To { get; set; }
         public DateTime DateTravelStart { get; set; }
         public bool IsAuthorPassenger { get; set; }
         public string AuthorName { get; set; }
-        public string AuthorEmail { get; set; }
 
     }
 }

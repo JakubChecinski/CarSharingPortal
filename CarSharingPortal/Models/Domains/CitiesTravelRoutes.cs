@@ -15,9 +15,7 @@ namespace CarSharingPortal.Models.Domains
         public int Id { get; set; }
         public int CityId { get; set; }
         public City City { get; set; }
-        public int TravelRouteEndPointId { get; set; }
-        public TravelRoute TravelRouteEndPoint { get; set; }
-        public int TravelRouteConnectionId { get; set; }
-        public TravelRoute TravelRouteConnection { get; set; }
+        public int TravelRouteId { get; set; }
+        public TravelRoute TravelRoute { get; set; }
     }
 }

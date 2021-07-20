@@ -7,5 +7,6 @@ namespace CarSharingPortal.Services
     {
         IEnumerable<City> Get();
         void Add(City city);
+        void InitializeCities();
     }
 }
