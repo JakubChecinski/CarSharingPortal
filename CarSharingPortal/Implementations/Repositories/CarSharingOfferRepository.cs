@@ -38,8 +38,9 @@ namespace CarSharingPortal.Implementations.Repositories
         public IEnumerable<CarSharingOfferViewModel> Get(string city1, string city2, bool isPassenger)
         {
             var resultAsList = _context.CarSharingOffers
-                .Include(x => x.Author.UserName)
-                .Include(x => x.Author.Email)
+                .Include(x => x.TravelRoute)
+                .Include(x => x.TravelRoute.Start)
+                .Include(x => x.TravelRoute.End)
                 .Where(x => x.IsAuthorPassenger == isPassenger)
                 .Where(x => IsRouteAcceptable(x.TravelRoute, city1, city2)).ToList();
             return resultAsList
@@ -52,6 +53,24 @@ namespace CarSharingPortal.Implementations.Repositories
                     AuthorName = x.AuthorName,
                 });
         }
+        public IEnumerable<CarSharingOfferViewModel> Get(string authorName)
+        {
+            var resultAsList = _context.CarSharingOffers
+                .Include(x => x.TravelRoute)
+                .Include(x => x.TravelRoute.Start)
+                .Include(x => x.TravelRoute.End)
+                .Where(x => x.AuthorName == authorName).ToList();
+            return resultAsList
+                .Select(x => new CarSharingOfferViewModel
+                {
+                    From = x.TravelRoute.Start.Name,
+                    To = x.TravelRoute.End.Name,
+                    DateTravelStart = x.DateTravelStart,
+                    IsAuthorPassenger = x.IsAuthorPassenger,
+                    AuthorName = x.AuthorName,
+                });
+        }
+
         private bool IsRouteAcceptable(TravelRoute tr, string city1, string city2)
         {
             var condition1 = tr.Start.Name == city1 && tr.End.Name == city2;

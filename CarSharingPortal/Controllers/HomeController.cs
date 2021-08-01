@@ -93,9 +93,10 @@ namespace CarSharingPortal.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Manage()
+        public IActionResult ManageOffers()
         {
-            return View();
+            var offers = _offerService.Get(User.GetUserName());
+            return View(offers);
         }
 
 

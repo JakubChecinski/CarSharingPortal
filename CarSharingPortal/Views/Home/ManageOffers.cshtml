@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<CarSharingPortal.Models.ViewModels.CarSharingOfferViewModel>
 
-
 <div id="myTasksTable">
     <table class="table table-bordered">
         <thead class="thead-dark">
@@ -10,6 +9,8 @@
                 <th scope="col">To</th>
                 <th scope="col">Date</th>
                 <th scope="col">Contact Info</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="offerTable">
@@ -17,9 +18,7 @@
             {
                 foreach (var offer in Model)
                 {
-                    var offerType = "driver";
-                    if (offer.IsAuthorPassenger) offerType = "passenger";
-                    <tr class="@offerType">
+                    <tr>
                         <td>
                             @if (@offer.IsAuthorPassenger)
                             {
@@ -42,6 +41,12 @@
                         <td>
                             @offer.AuthorName
                         </td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-primary">Edit</button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                 }
             }
@@ -49,7 +54,7 @@
             {
                 <tr>
                     <td class="text-center" colspan="5">
-                        No offers currently available.
+                        You have no current offers to manage.
                     </td>
                 </tr>
             }
