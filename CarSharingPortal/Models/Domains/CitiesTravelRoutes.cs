@@ -9,7 +9,7 @@ namespace CarSharingPortal.Models.Domains
     public class CitiesTravelRoutes
     {
         // join table class
-        // this is how EF core wants to represent many-to-many relationships, apparently
+        // this is how EF Core wants to represent many-to-many relationships, apparently
 
         [Key]
         public int Id { get; set; }

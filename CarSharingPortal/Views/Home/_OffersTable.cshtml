@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<CarSharingPortal.Models.ViewModels.CarSharingOfferViewModel>
 
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+<style type="text/css">
+
+</style>
 
 <div id="myTasksTable">
     <table class="table table-bordered">
@@ -15,20 +15,22 @@
                 <th scope="col">Contact Info</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="offerTable">
             @if (Model != null && Model.Any())
             {
                 foreach (var offer in Model)
                 {
-                    <tr>
+                    var offerType = "driver";
+                    if (offer.IsAuthorPassenger) offerType = "passenger";
+                    <tr class="@offerType">
                         <td>
                             @if (@offer.IsAuthorPassenger)
                             {
-                                <p>Driver</p>
+                                <text>Driver</text>
                             }
                             else
                             {
-                                <p>Passengers</p>
+                                <text>Passengers</text>
                             }
                         </td>
                         <td>
