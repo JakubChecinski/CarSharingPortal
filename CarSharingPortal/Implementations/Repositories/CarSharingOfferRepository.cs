@@ -89,8 +89,9 @@ namespace CarSharingPortal.Implementations.Repositories
                 && tr.AcceptableConnections.Any(x => x.City.Name == city2);
             var condition3 = tr.AcceptableConnections.Any(x => x.City.Name == city1)
                 && tr.End.Name == city2;
-            var condition4 = tr.AcceptableConnections.Any(x => x.City.Name == city1)
-                && tr.AcceptableConnections.Any(x => x.City.Name == city2);
+            var condition4 = false;
+                //tr.AcceptableConnections.Any(x => x.City.Name == city1)
+                //&& tr.AcceptableConnections.Any(x => x.City.Name == city2);
             return condition1 || condition2 || condition3 || condition4;
         }
 

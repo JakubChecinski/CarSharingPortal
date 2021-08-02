@@ -1,19 +1,22 @@
 ﻿using CarSharingPortal.Models;
 using CarSharingPortal.Models.Domains;
 using CarSharingPortal.Services;
-using System;
+using ShortestPathCalculator;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CarSharingPortal.Implementations.Services
 {
     public class TravelRouteService : ITravelRouteService
     {
         private IUnitOfWork _unitOfWork;
+        private Graph _connectionGraph;
+        private IEnumerable<City> _cities;
         public TravelRouteService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _cities = _unitOfWork.Cities.Get();
+            _connectionGraph = new Graph();
         }
 
         public TravelRoute Get(int startId, int endId)
@@ -22,11 +25,20 @@ namespace CarSharingPortal.Implementations.Services
         }
         public void Add(TravelRoute route)
         {
-            if(!CheckExistence(route))
+            if (CheckExistence(route)) return;
+            var namesOfAcceptableCities = _connectionGraph.FindShortest(
+                _cities.Single(x => x.Id == route.StartId).Name,
+                _cities.Single(x => x.Id == route.EndId).Name);
+            foreach(var cityName in namesOfAcceptableCities)
             {
-                _unitOfWork.Routes.Add(route);
-                _unitOfWork.Save();
+                route.AcceptableConnections.Add(new CitiesTravelRoutes()
+                { 
+                    TravelRouteId = route.Id,
+                    CityId = _cities.Single(x => x.Name == cityName).Id,
+                });
             }
+            _unitOfWork.Routes.Add(route);
+            _unitOfWork.Save();
         }
         public bool CheckExistence(TravelRoute route)
         {
