@@ -28,6 +28,7 @@ namespace CarSharingPortal.Implementations.Repositories
             return resultAsList
                 .Select(x => new CarSharingOfferViewModel
                 {
+                    OfferId = x.Id,
                     From = x.TravelRoute.Start.Name,
                     To = x.TravelRoute.End.Name,
                     DateTravelStart = x.DateTravelStart,
@@ -46,6 +47,7 @@ namespace CarSharingPortal.Implementations.Repositories
             return resultAsList
                 .Select(x => new CarSharingOfferViewModel
                 {
+                    OfferId = x.Id,
                     From = x.TravelRoute.Start.Name,
                     To = x.TravelRoute.End.Name,
                     DateTravelStart = x.DateTravelStart,
@@ -63,6 +65,7 @@ namespace CarSharingPortal.Implementations.Repositories
             return resultAsList
                 .Select(x => new CarSharingOfferViewModel
                 {
+                    OfferId = x.Id,
                     From = x.TravelRoute.Start.Name,
                     To = x.TravelRoute.End.Name,
                     DateTravelStart = x.DateTravelStart,
@@ -95,9 +98,9 @@ namespace CarSharingPortal.Implementations.Repositories
             offerToUpdate.IsAuthorPassenger = offer.IsAuthorPassenger;
             offerToUpdate.TravelRouteId = offer.TravelRouteId;
         }
-        public void Delete(CarSharingOffer offer, string userId)
+        public void Delete(int offerId, string userId)
         {
-            var offerToDelete = _context.CarSharingOffers.Single(x => x.Id == offer.Id && x.AuthorId == userId);
+            var offerToDelete = _context.CarSharingOffers.Single(x => x.Id == offerId && x.AuthorId == userId);
             _context.CarSharingOffers.Remove(offerToDelete);
         }
 

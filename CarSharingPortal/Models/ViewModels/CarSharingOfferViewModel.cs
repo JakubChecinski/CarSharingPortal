@@ -7,6 +7,7 @@ namespace CarSharingPortal.Models.ViewModels
 {
     public class CarSharingOfferViewModel
     {
+        public int OfferId { get; set; }
         public string Heading { get; set; }
         public string From { get; set; }
         public string To { get; set; }

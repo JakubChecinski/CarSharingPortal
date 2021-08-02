@@ -99,6 +99,25 @@ namespace CarSharingPortal.Controllers
             return View(offers);
         }
 
+        [HttpPost]
+        public IActionResult DeleteOffer(int id)
+        {
+            var userId = User.GetUserId();
+            try
+            {
+                _offerService.Delete(id, userId);
+            }
+            catch (Exception exc)
+            {
+                // logowanie bledu
+                return Json(new
+                {
+                    success = false,
+                    message = exc.Message
+                });
+            }
+            return Json(new { success = true });
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

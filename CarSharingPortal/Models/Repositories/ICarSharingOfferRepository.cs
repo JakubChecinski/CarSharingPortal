@@ -14,7 +14,7 @@ namespace CarSharingPortal.Models.Repositories
         IEnumerable<CarSharingOfferViewModel> Get(string authorName);
         void Add(CarSharingOffer offer);
         void Update(CarSharingOffer offer, string userId);
-        void Delete(CarSharingOffer offer, string userId);
+        void Delete(int offerId, string userId);
         
     }
 }

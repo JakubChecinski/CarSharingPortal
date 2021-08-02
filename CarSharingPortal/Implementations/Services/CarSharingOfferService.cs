@@ -40,9 +40,9 @@ namespace CarSharingPortal.Implementations.Services
             _unitOfWork.Offers.Update(offer, userId);
             _unitOfWork.Save();
         }
-        public void Delete(CarSharingOffer offer, string userId)
+        public void Delete(int offerId, string userId)
         {
-            _unitOfWork.Offers.Delete(offer, userId);
+            _unitOfWork.Offers.Delete(offerId, userId);
             _unitOfWork.Save();
         }
 
