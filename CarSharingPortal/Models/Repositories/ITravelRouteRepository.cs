@@ -10,5 +10,6 @@ namespace CarSharingPortal.Models.Repositories
     {
         TravelRoute Get(int startId, int endId);
         void Add(TravelRoute route);
+        bool CheckConnection(int startId, int endId, int connectionId);
     }
 }

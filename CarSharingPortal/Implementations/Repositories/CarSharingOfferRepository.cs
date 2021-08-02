@@ -12,9 +12,11 @@ namespace CarSharingPortal.Implementations.Repositories
     public class CarSharingOfferRepository : ICarSharingOfferRepository
     {
         private IApplicationDbContext _context;
-        public CarSharingOfferRepository(IApplicationDbContext context)
+        private ITravelRouteRepository _routes;
+        public CarSharingOfferRepository(IApplicationDbContext context, ITravelRouteRepository Routes)
         {
             _context = context;
+            _routes = Routes;
         }
 
         public IEnumerable<CarSharingOfferViewModel> Get()
@@ -86,12 +88,13 @@ namespace CarSharingPortal.Implementations.Repositories
 
         private bool IsRouteAcceptable(TravelRoute tr, int city1Id, int city2Id)
         {
-            var condition1 = tr.Start.Id == city1Id && tr.End.Id == city2Id;
-            var condition2 = tr.Start.Id == city1Id
+            var condition1 = tr.StartId == city1Id && tr.EndId == city2Id;
+            var condition2 = tr.StartId == city1Id
                 && tr.AcceptableConnections.Any(x => x.CityId == city2Id);
             var condition3 = tr.AcceptableConnections.Any(x => x.CityId == city1Id)
                 && tr.End.Id == city2Id;
-            var condition4 = false;
+            var condition4 = tr.AcceptableConnections.Any(x => x.CityId == city1Id)
+                && _routes.CheckConnection(city1Id, tr.EndId, city2Id);
             return condition1 || condition2 || condition3 || condition4;
         }
 

@@ -18,9 +18,9 @@ namespace CarSharingPortal.Implementations
         public UnitOfWork(IApplicationDbContext context)
         {
             _context = context;
-            Offers = new CarSharingOfferRepository(context);
             Cities = new CityRepository(context);
             Routes = new TravelRouteRepository(context);
+            Offers = new CarSharingOfferRepository(context, Routes);
         }
         public void Save()
         {

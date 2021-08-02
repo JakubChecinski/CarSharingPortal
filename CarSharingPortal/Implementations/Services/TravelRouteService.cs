@@ -39,6 +39,21 @@ namespace CarSharingPortal.Implementations.Services
             }
             _unitOfWork.Routes.Add(route);
             _unitOfWork.Save();
+            // add subroutes as separate objects
+            // note that the original route must be committed first, or we would risk an infinite recurrency
+            foreach (var cityName in namesOfAcceptableCities)
+            {
+                Add(new TravelRoute()
+                {
+                    StartId = route.StartId,
+                    EndId = _cities.Single(x => x.Name == cityName).Id,
+                });
+                Add(new TravelRoute()
+                {
+                    StartId = _cities.Single(x => x.Name == cityName).Id,
+                    EndId = route.EndId,
+                });
+            }
         }
         public bool CheckExistence(TravelRoute route)
         {
