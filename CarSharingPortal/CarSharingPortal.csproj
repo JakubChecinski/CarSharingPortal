@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.js" />
-    <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.pl.min.js" />
   </ItemGroup>
 
   <ItemGroup>

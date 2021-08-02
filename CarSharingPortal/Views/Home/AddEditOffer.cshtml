@@ -7,11 +7,11 @@
 <h1 class="mb-3">@Model.Heading</h1>
 
 
-@using (Html.BeginForm("AddEditOffer, Home"))
+@using (Html.BeginForm("AddEditOffer", "Home", FormMethod.Post, new { id = "mainForm" }))
 {
 
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
+    <div asp-validation-summary="All" class="text-danger"></div>
 
     @Html.HiddenFor(x => x.Offer.Id)
     @Html.HiddenFor(x => x.Offer.DateCreated)
@@ -52,8 +52,10 @@
         @Html.LabelFor(x => x.Offer.DateTravelStart)
         @Html.TextBoxFor(x => x.Offer.DateTravelStart,
             "{0:yyyy-MM-dd}",
-            new { @class = "form-control", @id = "TravelStart", autocomplete = "off" })
-        @Html.ValidationMessageFor(x => x.Offer.DateTravelStart)
+            new { @class = "form-control", @id = "TravelStart", autocomplete = "off",
+                data_val = "true",
+                data_val_dategreaterthantoday = "Date must be greater than today" })
+        <span asp-validation-for="@Model.Offer.DateTravelStart" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -62,7 +64,7 @@
             new SelectList(Model.Cities, "Id", "Name"),
             "-- select a city --",
             new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Route.Start)
+        <span asp-validation-for="@Model.Route.StartId" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -71,7 +73,7 @@
             new SelectList(Model.Cities, "Id", "Name"),
             "-- select a city --",
             new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Route.End)
+        <span asp-validation-for="@Model.Route.EndId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary btn-lg mt-2">
@@ -85,25 +87,14 @@
 
         $(document).ready(function () {
 
-            // from https://stackoverflow.com/a/35413963 (ensure yyyy-MM-dd format)
-            $.validator.methods.date = function (dateString) {
-                return true;
-                var regEx = /^\d{4}-\d{2}-\d{2}$/;
-                if (!dateString.match(regEx)) return false;  // Invalid format
-                var d = new Date(dateString);
-                var dNum = d.getTime();
-                if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
-                return d.toISOString().slice(0, 10) === dateString;
-            };
-
             $("#TravelStart").datepicker({
                 format: "yyyy-mm-dd",
                 multidate: false,
                 autoclose: true,
-                todayHighlight: true,
-                forceParse: false
+                todayHighlight: false,
+                forceParse: false,
+                weekStart: 1
             });
-
         });
 
     </script>

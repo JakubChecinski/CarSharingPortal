@@ -14,5 +14,6 @@ namespace CarSharingPortal.Models.ViewModels
         public string Heading { get; set; }
         public bool IsAdd { get; set; }
         public TravelRoute Route { get; set; }
+        
     }
 }

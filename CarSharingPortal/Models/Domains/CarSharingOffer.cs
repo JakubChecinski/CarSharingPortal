@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,7 @@ namespace CarSharingPortal.Models.Domains
         public DateTime DateCreated { get; set; }
 
         [Required]
+        [GreaterThanToday]
         [Display(Name="Travelling on...")]
         public DateTime DateTravelStart { get; set; }
 
@@ -33,4 +35,16 @@ namespace CarSharingPortal.Models.Domains
         public int TravelRouteId { get; set; }
         public TravelRoute TravelRoute { get; set; }
     }
+
+    public class GreaterThanTodayAttribute : ValidationAttribute
+    {
+        public string GetErrorMessage() =>
+            $"Travel date must be today or later";
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if ((DateTime)value >= DateTime.Today) return ValidationResult.Success;
+            return new ValidationResult(GetErrorMessage());
+        }
+    }
+
 }
