@@ -21,9 +21,9 @@ namespace CarSharingPortal.Implementations.Services
         {
             return _unitOfWork.Offers.Get();
         }
-        public IEnumerable<CarSharingOfferViewModel> Get(string city1, string city2, bool isPassenger)
+        public IEnumerable<CarSharingOfferViewModel> Get(int city1Id, int city2Id, bool isPassenger)
         {
-            return _unitOfWork.Offers.Get(city1, city2, isPassenger);
+            return _unitOfWork.Offers.Get(city1Id, city2Id, isPassenger);
         }
         public IEnumerable<CarSharingOfferViewModel> Get(string authorName)
         {

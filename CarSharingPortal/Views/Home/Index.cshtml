@@ -8,6 +8,59 @@
     <h1>Welcome to Car Sharing Portal!</h1>
 </div>
 <br />
+
+<form id="filterForm">
+    <div class="form-row align-items-center">
+        <div>I am a: </div>
+        <div class="form-check ml-2">
+            @Html.RadioButtonFor(x => x.IsPassenger, false,
+                new
+                     {
+                         @class = "form-check-input filter-input",
+                         type = "radio",
+                         name = "radioDriverPassenger",
+                         @id = "radioDriver",
+                         @checked = "checked"
+                     })
+            <label class="form-check-label" for="radioDriver">
+                Driver
+            </label>
+        </div>
+        <div class="form-check ml-2">
+            @Html.RadioButtonFor(x => x.IsPassenger, true,
+                new
+                     {
+                         @class = "form-check-input filter-input",
+                         type = "radio",
+                         name = "radioDriverPassenger",
+                         @id = "radioDriver",
+                         @checked = "checked"
+                     })
+            <label class="form-check-label" for="radioPassenger">
+                Passenger
+            </label>
+        </div>
+        <div class="form-group ml-3 mb-0">
+            @Html.DropDownListFor(x => x.SearchingFromId,
+                new SelectList(Model.Cities, "Id", "Name"),
+                "-- from --",
+                new { @class = "form-control" })
+        </div>
+
+        <div class="form-group ml-1 mb-0">
+            @Html.DropDownListFor(x => x.SearchingToId,
+                new SelectList(Model.Cities, "Id", "Name"),
+                "-- to --",
+                new { @class = "form-control" })
+        </div>
+        <div class="col-auto ml-1">
+            <button type="submit" class="btn btn-primary">
+                Search
+            </button>
+        </div>
+    </div>
+</form>
+<br />
 <div>
     @await Html.PartialAsync("_OffersTable.cshtml", Model.Offers)
 </div>
@@ -15,6 +68,27 @@
 @section Scripts
 {
     <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#filterForm").submit(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Index", "Home")",
+                    data: $(this).serialize(),
+
+                    dataType: "html",
+                    success: function (result) {
+                        $("#fullOfferTable").html(result);
+                    },
+                    error: function (result) {
+                        // logowanie bledu
+                        alert(result.responseText);
+                    }
+                });
+                return false;
+            });
+        });
 
     </script>
 }

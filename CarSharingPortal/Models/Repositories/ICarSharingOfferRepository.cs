@@ -10,7 +10,7 @@ namespace CarSharingPortal.Models.Repositories
     public interface ICarSharingOfferRepository
     {
         IEnumerable<CarSharingOfferViewModel> Get();
-        IEnumerable<CarSharingOfferViewModel> Get(string city1, string city2, bool isPassenger);
+        IEnumerable<CarSharingOfferViewModel> Get(int city1Id, int city2Id, bool isPassenger);
         IEnumerable<CarSharingOfferViewModel> Get(string authorName);
         CarSharingOffer Get(int id);
         void Add(CarSharingOffer offer);

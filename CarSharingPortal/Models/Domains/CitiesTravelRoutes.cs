@@ -13,8 +13,10 @@ namespace CarSharingPortal.Models.Domains
 
         [Key]
         public int Id { get; set; }
+
         public int CityId { get; set; }
         public City City { get; set; }
+
         public int TravelRouteId { get; set; }
         public TravelRoute TravelRoute { get; set; }
     }

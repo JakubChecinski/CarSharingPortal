@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CarSharingPortal.Implementations.Repositories
 {
@@ -36,14 +35,17 @@ namespace CarSharingPortal.Implementations.Repositories
                     AuthorName = x.AuthorName,
                 });
         }
-        public IEnumerable<CarSharingOfferViewModel> Get(string city1, string city2, bool isPassenger)
+        public IEnumerable<CarSharingOfferViewModel> Get(int city1Id, int city2Id, bool isPassenger)
         {
             var resultAsList = _context.CarSharingOffers
+                .Where(x => x.IsAuthorPassenger == isPassenger)
                 .Include(x => x.TravelRoute)
                 .Include(x => x.TravelRoute.Start)
                 .Include(x => x.TravelRoute.End)
-                .Where(x => x.IsAuthorPassenger == isPassenger)
-                .Where(x => IsRouteAcceptable(x.TravelRoute, city1, city2)).ToList();
+                .Include(x => x.TravelRoute.AcceptableConnections)
+                .ThenInclude(y => y.City).ToList();
+            resultAsList = resultAsList
+                .Where(x => IsRouteAcceptable(x.TravelRoute, city1Id, city2Id)).ToList();
             return resultAsList
                 .Select(x => new CarSharingOfferViewModel
                 {
@@ -82,16 +84,14 @@ namespace CarSharingPortal.Implementations.Repositories
                 .Single(x => x.Id == id);
         }
 
-        private bool IsRouteAcceptable(TravelRoute tr, string city1, string city2)
+        private bool IsRouteAcceptable(TravelRoute tr, int city1Id, int city2Id)
         {
-            var condition1 = tr.Start.Name == city1 && tr.End.Name == city2;
-            var condition2 = tr.Start.Name == city1
-                && tr.AcceptableConnections.Any(x => x.City.Name == city2);
-            var condition3 = tr.AcceptableConnections.Any(x => x.City.Name == city1)
-                && tr.End.Name == city2;
+            var condition1 = tr.Start.Id == city1Id && tr.End.Id == city2Id;
+            var condition2 = tr.Start.Id == city1Id
+                && tr.AcceptableConnections.Any(x => x.CityId == city2Id);
+            var condition3 = tr.AcceptableConnections.Any(x => x.CityId == city1Id)
+                && tr.End.Id == city2Id;
             var condition4 = false;
-                //tr.AcceptableConnections.Any(x => x.City.Name == city1)
-                //&& tr.AcceptableConnections.Any(x => x.City.Name == city2);
             return condition1 || condition2 || condition3 || condition4;
         }
 

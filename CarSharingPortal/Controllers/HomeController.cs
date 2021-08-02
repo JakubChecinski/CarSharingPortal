@@ -41,6 +41,14 @@ namespace CarSharingPortal.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public IActionResult Index(IndexViewModel viewModel)
+        {
+            var validOffers = _offerService.Get(viewModel.SearchingFromId, 
+                viewModel.SearchingToId, viewModel.IsPassenger);
+            return PartialView("_OffersTable", validOffers);
+        }
+
         [HttpGet]
         [Authorize]
         public IActionResult AddEditOffer(int id = 0)
