@@ -28,11 +28,11 @@
                 </button>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active mx-1 px-3 text-dark" asp-area="" asp-controller="Home" asp-action="AddEditOffer">Add Offer</a>
-                        </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link active mx-1 px-3 text-dark" asp-area="" asp-controller="Home" asp-action="AddEditOffer">Add Offer</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link active mx-1 px-3 text-dark" asp-area="" asp-controller="Home" asp-action="ManageOffers">Manage Offers</a>
                             </li>

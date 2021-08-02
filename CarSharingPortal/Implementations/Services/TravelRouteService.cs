@@ -16,16 +16,23 @@ namespace CarSharingPortal.Implementations.Services
             _unitOfWork = unitOfWork;
         }
 
-        public TravelRoute Get(City start, City end)
+        public TravelRoute Get(int startId, int endId)
         {
-            return _unitOfWork.Routes.Get(start, end);
+            return _unitOfWork.Routes.Get(startId, endId);
         }
         public void Add(TravelRoute route)
         {
-            _unitOfWork.Routes.Add(route);
-            _unitOfWork.Save();
+            if(!CheckExistence(route))
+            {
+                _unitOfWork.Routes.Add(route);
+                _unitOfWork.Save();
+            }
         }
-
+        public bool CheckExistence(TravelRoute route)
+        {
+            if (_unitOfWork.Routes.Get(route.StartId, route.EndId) == null) return false;
+            else return true;
+        }
 
     }
 }

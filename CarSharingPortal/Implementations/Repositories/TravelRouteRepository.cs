@@ -21,9 +21,9 @@ namespace CarSharingPortal.Implementations.Repositories
             _context.TravelRoutes.Add(route);
         }
 
-        public TravelRoute Get(City start, City end)
+        public TravelRoute Get(int startId, int endId)
         {
-            return _context.TravelRoutes.Single(x => x.Start == start && x.End == end);
+            return _context.TravelRoutes.SingleOrDefault(x => x.StartId == startId && x.EndId == endId);
         }
     }
 }

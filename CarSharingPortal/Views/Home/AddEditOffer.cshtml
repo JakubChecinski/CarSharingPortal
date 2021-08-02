@@ -16,20 +16,33 @@
     @Html.HiddenFor(x => x.Offer.Id)
     @Html.HiddenFor(x => x.Offer.DateCreated)
     @Html.HiddenFor(x => x.Offer.AuthorId)
+    @Html.HiddenFor(x => x.IsAdd)
 
     <div>I am a... </div>
     <div class="form-check">
         @Html.RadioButtonFor(x => x.Offer.IsAuthorPassenger, false,
-            new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
-            @id="radioDriver", @checked="checked"})
+            new
+                 {
+                     @class = "form-check-input",
+                     type = "radio",
+                     name = "radioDriverPassenger",
+            @id = "radioDriver",
+                     @checked = "checked"
+                 })
         <label class="form-check-label" for="radioDriver">
             Driver
         </label>
     </div>
     <div class="form-check">
         @Html.RadioButtonFor(x => x.Offer.IsAuthorPassenger, true,
-            new { @class="form-check-input", type="radio", name="radioDriverPassenger", 
-            @id="radioDriver", @checked="checked"})
+            new
+                 {
+                     @class = "form-check-input",
+                     type = "radio",
+                     name = "radioDriverPassenger",
+            @id = "radioDriver",
+                     @checked = "checked"
+                 })
         <label class="form-check-label" for="radioPassenger">
             Passenger
         </label>
@@ -42,7 +55,7 @@
             new { @class = "form-control", @id = "TravelStart", autocomplete = "off" })
         @Html.ValidationMessageFor(x => x.Offer.DateTravelStart)
     </div>
-    
+
     <div class="form-group">
         @Html.LabelFor(x => x.Route.StartId)
         @Html.DropDownListFor(x => x.Route.StartId,
@@ -58,7 +71,7 @@
             new SelectList(Model.Cities, "Id", "Name"),
             "-- select a city --",
             new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Route.EndId)
+        @Html.ValidationMessageFor(x => x.Route.End)
     </div>
 
     <button type="submit" class="btn btn-primary btn-lg mt-2">

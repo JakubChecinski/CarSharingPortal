@@ -8,7 +8,7 @@ namespace CarSharingPortal.Models.Repositories
 {
     public interface ITravelRouteRepository
     {
-        TravelRoute Get(City start, City end);
+        TravelRoute Get(int startId, int endId);
         void Add(TravelRoute route);
     }
 }

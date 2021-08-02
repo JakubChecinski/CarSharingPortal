@@ -42,10 +42,14 @@
                             @offer.AuthorName
                         </td>
                         <td style="text-align: center;">
-                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-primary" 
+                                    onclick="location.href='@Url.Action("AddEditOffer", "Home", new { id = offer.OfferId })'">
+                                Edit
+                            </button>
                         </td>
                         <td style="text-align: center;">
-                            <button class="btn btn-danger" onclick="deleteOffer('@offer.OfferId', this)">
+                            <button class="btn btn-danger" 
+                                    onclick="deleteOffer('@offer.OfferId', this)">
                                 Delete
                             </button>
                         </td>

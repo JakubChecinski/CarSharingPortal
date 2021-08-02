@@ -43,51 +43,64 @@ namespace CarSharingPortal.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult AddEditOffer()
+        public IActionResult AddEditOffer(int id = 0)
         {
-            var userId = User.GetUserId();
-            var vm = new AddEditOfferViewModel
-            {
-                Heading = "Add a new offer",
-                Cities = _cityService.Get().ToList(),
-                Offer = new CarSharingOffer()
-                {
-                    AuthorId = userId,
-                    DateCreated = DateTime.Today,
-                    DateTravelStart = DateTime.Today.AddDays(1),
-                },
-                Route = new TravelRoute(),
-            };
-            return View(vm);
+            return View(PrepareViewModel(id, id == 0));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddEditOffer(AddEditOfferViewModel vm)
         {
-            var userId = User.GetUserId();
-            vm.Offer.AuthorId = userId;
-            if (!ModelState.IsValid)
-            {
-                var newVm = new AddEditOfferViewModel
-                {
-                    Heading = "Add a new offer",
-                    Cities = _cityService.Get().ToList(),
-                    Offer = new CarSharingOffer()
-                    {
-                        AuthorId = userId,
-                        DateCreated = DateTime.Today,
-                        DateTravelStart = DateTime.Today.AddDays(1),
-                    },
-                    Route = new TravelRoute(),
-                };
-                return View("AddEditOffer", newVm);
-            }
-            _routeService.Add(vm.Route);
-            vm.Offer.TravelRoute = vm.Route;
+            if (!ModelState.IsValid) return View("AddEditOffer", PrepareViewModel(vm.Offer.Id, vm.IsAdd));
+            vm.Offer.AuthorId = User.GetUserId();
             vm.Offer.AuthorName = User.GetUserName();
-            _offerService.Add(vm.Offer);
-            return RedirectToAction("Index");
+            vm.Offer.TravelRouteId = GetUniqueRouteId(vm.Route);
+            if (vm.IsAdd)
+            {
+                _offerService.Add(vm.Offer);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _offerService.Update(vm.Offer, User.GetUserId());
+                return RedirectToAction("ManageOffers");
+            }
+        }
+        private int GetUniqueRouteId(TravelRoute route)
+        {
+            if (_routeService.CheckExistence(route))
+            {
+                return _routeService.Get(route.StartId, route.EndId).Id;
+            }
+            var newRoute = new TravelRoute()
+            {
+                StartId = route.StartId,
+                EndId = route.EndId,
+            };
+            _routeService.Add(newRoute);
+            return newRoute.Id;
+        }
+        private AddEditOfferViewModel PrepareViewModel(int offerId, bool isAdd)
+        {
+            var userId = User.GetUserId();
+            var offer = isAdd ?
+                new CarSharingOffer()
+                {
+                    AuthorId = userId,
+                    DateCreated = DateTime.Today,
+                    DateTravelStart = DateTime.Today.AddDays(1),
+                } :
+                _offerService.Get(offerId);
+            return new AddEditOfferViewModel
+            {
+                IsAdd = isAdd,
+                Heading = isAdd ? "Add a new offer" : "Edit offer",
+                Cities = _cityService.Get().ToList(),
+                Offer = offer,
+                Route = isAdd ? new TravelRoute() :
+                _routeService.Get(offer.TravelRoute.StartId, offer.TravelRoute.EndId),
+            };
         }
 
 

@@ -73,6 +73,14 @@ namespace CarSharingPortal.Implementations.Repositories
                     AuthorName = x.AuthorName,
                 });
         }
+        public CarSharingOffer Get(int id)
+        {
+            return _context.CarSharingOffers
+                .Include(x => x.TravelRoute)
+                .Include(x => x.TravelRoute.Start)
+                .Include(x => x.TravelRoute.End)
+                .Single(x => x.Id == id);
+        }
 
         private bool IsRouteAcceptable(TravelRoute tr, string city1, string city2)
         {

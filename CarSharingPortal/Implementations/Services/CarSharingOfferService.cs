@@ -29,6 +29,10 @@ namespace CarSharingPortal.Implementations.Services
         {
             return _unitOfWork.Offers.Get(authorName);
         }
+        public CarSharingOffer Get(int id)
+        {
+            return _unitOfWork.Offers.Get(id);
+        }
 
         public void Add(CarSharingOffer offer)
         {

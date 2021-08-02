@@ -8,7 +8,8 @@ namespace CarSharingPortal.Services
 {
     public interface ITravelRouteService
     {
-        TravelRoute Get(City start, City end);
+        TravelRoute Get(int startId, int endId);
         void Add(TravelRoute route);
+        bool CheckExistence(TravelRoute route);
     }
 }
