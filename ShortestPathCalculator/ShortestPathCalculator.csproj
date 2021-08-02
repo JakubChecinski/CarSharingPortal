@@ -5,4 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="OptimizedPriorityQueue" Version="4.1.1" />
+    <PackageReference Include="QuikGraph" Version="2.3.0" />
+  </ItemGroup>
+
 </Project>
