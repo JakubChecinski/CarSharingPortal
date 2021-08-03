@@ -22,6 +22,17 @@
     margin-top: .45rem;
 }
 
+.privacyPolicyInfo {
+    font-size: 10px;
+    position: fixed;
+    bottom: 0;
+    background-color: darkgray;
+    width: 100%;
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+}
+
 
 
 /**************************************************************/

@@ -4,6 +4,7 @@ using CarSharingPortal.Models.Domains;
 using CarSharingPortal.Models.ViewModels;
 using CarSharingPortal.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -130,7 +131,7 @@ namespace CarSharingPortal.Controllers
             }
             catch (Exception exc)
             {
-                // logowanie bledu
+                _logger.LogError(exc.Message);
                 return Json(new
                 {
                     success = false,
@@ -144,6 +145,8 @@ namespace CarSharingPortal.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            _logger.LogError(exceptionHandlerPathFeature?.Error.Message);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 

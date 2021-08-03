@@ -38,7 +38,7 @@
                             </li>
                         }
                     </ul>
-                    <partial name="_LoginPartial"/>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -55,9 +55,39 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-cookie/jquery.cookie.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <div class="privacyPolicyInfo" style="display: none;">
+        This website uses cookies to distinguish you from other users and remember your preferences.
+        Your data is not shared with any third party.
+        By continuing to browse this site you are agreeing to our use of cookies.
+        <button onclick="closePrivacyPolice()" type="button" class="btn btn-light btn-sm mx-2 privacyPolicyButton">
+            I understand.
+        </button>
+    </div>
+
     @RenderSection("Scripts", required: false)
+
+    <script>
+
+        $(document).ready(function () {
+            if ($.cookie("privacyPolicy") !== "1") {
+                $('.privacyPolicyInfo').css("display", "");
+            }
+            else {
+                $('.privacyPolicyInfo').css("display", "none");
+            }
+        });
+
+        function closePrivacyPolice() {
+            $.cookie("privacyPolicy", "1", { path: '/', expires: 180 });
+            $('.privacyPolicyInfo').css("display", "none");
+        }
+
+    </script>
+
 </body>
 </html>

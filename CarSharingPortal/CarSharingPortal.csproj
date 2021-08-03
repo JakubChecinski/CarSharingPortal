@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-CarSharingPortal-FA6F0CDE-0E9C-49FF-8562-516F1DA06E80</UserSecretsId>
@@ -29,6 +30,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="NReco.Logging.File" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>
