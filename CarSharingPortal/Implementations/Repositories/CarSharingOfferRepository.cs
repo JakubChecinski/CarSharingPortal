@@ -40,7 +40,8 @@ namespace CarSharingPortal.Implementations.Repositories
         public IEnumerable<CarSharingOfferViewModel> Get(int city1Id, int city2Id, bool isPassenger)
         {
             var resultAsList = _context.CarSharingOffers
-                .Where(x => x.IsAuthorPassenger == isPassenger)
+                // inequality because a passenger looks for drivers and vice versa
+                .Where(x => x.IsAuthorPassenger != isPassenger) 
                 .Include(x => x.TravelRoute)
                 .Include(x => x.TravelRoute.Start)
                 .Include(x => x.TravelRoute.End)
