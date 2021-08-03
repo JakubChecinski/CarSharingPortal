@@ -47,8 +47,10 @@ namespace CarSharingPortal.Implementations.Repositories
                 .Include(x => x.TravelRoute.End)
                 .Include(x => x.TravelRoute.AcceptableConnections)
                 .ThenInclude(y => y.City).ToList();
-            resultAsList = resultAsList
-                .Where(x => IsRouteAcceptable(x.TravelRoute, city1Id, city2Id)).ToList();
+            if(isPassenger) resultAsList = resultAsList
+                .Where(x => IsRouteAcceptablePassenger(x.TravelRoute, city1Id, city2Id)).ToList();
+            else resultAsList = resultAsList
+                .Where(x => IsRouteAcceptableDriver(x.TravelRoute, city1Id, city2Id)).ToList();
             return resultAsList
                 .Select(x => new CarSharingOfferViewModel
                 {
@@ -87,7 +89,7 @@ namespace CarSharingPortal.Implementations.Repositories
                 .Single(x => x.Id == id);
         }
 
-        private bool IsRouteAcceptable(TravelRoute tr, int city1Id, int city2Id)
+        private bool IsRouteAcceptablePassenger(TravelRoute tr, int city1Id, int city2Id)
         {
             var condition1 = tr.StartId == city1Id && tr.EndId == city2Id;
             var condition2 = tr.StartId == city1Id
@@ -96,6 +98,20 @@ namespace CarSharingPortal.Implementations.Repositories
                 && tr.End.Id == city2Id;
             var condition4 = tr.AcceptableConnections.Any(x => x.CityId == city1Id)
                 && _routes.CheckConnection(city1Id, tr.EndId, city2Id);
+            return condition1 || condition2 || condition3 || condition4;
+        }
+
+        private bool IsRouteAcceptableDriver(TravelRoute tr, int city1Id, int city2Id)
+        {
+            var condition1 = tr.StartId == city1Id && tr.EndId == city2Id;
+            var condition2 = tr.StartId == city1Id
+                && _routes.CheckConnection(city1Id, city2Id, tr.EndId);
+            var condition3 = _routes.CheckConnection(city1Id, city2Id, tr.StartId) 
+                && tr.End.Id == city2Id;
+            var condition4 = _routes.CheckConnection(city1Id, city2Id, tr.StartId)
+                && _routes.CheckConnection(city1Id, city2Id, tr.EndId)
+                && (_routes.CheckConnection(city1Id, tr.EndId, tr.StartId)
+                || _routes.CheckConnection(tr.StartId, city2Id, tr.EndId));
             return condition1 || condition2 || condition3 || condition4;
         }
 
